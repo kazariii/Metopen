@@ -13,7 +13,6 @@
 *.synctex.gz
 *.toc
 *.xdv
-*.pdf
 
 # Keep placeholder images
 !img/.gitkeep

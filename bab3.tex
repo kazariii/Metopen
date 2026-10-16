@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% BAB 3 - METODOLOGI
+% BAB 3 - METODOLOGI PENELITIAN
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\mychapter{3}{BAB 3 METODOLOGI}
+\mychapter{3}{BAB 3 METODOLOGI PENELITIAN}
 
 % Gambar diagram alir metodologi (opsional)
 % \begin{figure}[tph]
@@ -21,3 +21,19 @@
 \label{sec:tahapan-penelitian}
 
 % Tulis tahapan penelitian di sini.
+
+% Rincian berikut dipindahkan dari BAB 1 sesuai Panduan FILKOM 3.4.1.5.
+% BAB 3 masih berupa draf parsial dan tidak ditampilkan pada mode pendahuluan.
+\section{Rancangan Model dan Evaluasi}
+
+\subsection{Rancangan Model}
+
+Model CNN direncanakan menerima URL sebagai urutan karakter. Lapisan \textit{embedding}, konvolusi satu dimensi, \textit{pooling}, dan klasifikasi biner memproses masukan tersebut untuk menghasilkan prediksi \textit{phishing} atau sah. Pemilihan konfigurasi model mempertimbangkan ukuran model dan waktu inferensi. Bobot model dan ambang keputusan ditetapkan sebelum pengujian operasional dan dipertahankan pada seluruh skenario.
+
+\subsection{Pengukuran Pengendalian Akses}
+
+Tingkat keberhasilan pemblokiran merupakan proporsi permintaan berlabel \textit{phishing} yang berhasil dihentikan sebelum akses ke tujuan terhadap seluruh permintaan berlabel \textit{phishing} yang diuji. Tingkat kesalahan pemblokiran merupakan proporsi permintaan berlabel sah yang keliru dihentikan terhadap seluruh permintaan berlabel sah yang diuji. Kedua proporsi dilaporkan sebagai persentase. Status tindakan klien dan ketepatan prediksi model dicatat secara terpisah agar kesalahan klasifikasi dapat dibedakan dari kegagalan penerapan keputusan akses.
+
+\subsection{Pengukuran Kinerja Sistem}
+
+Pengukuran kinerja mencakup latensi, \textit{throughput}, penggunaan CPU, dan penggunaan memori pada kondisi VPN tanpa dan dengan detektor. Waktu inferensi dicatat untuk membantu menjelaskan biaya pemrosesan detektor. Perangkat, konfigurasi jaringan, serta beban uji disamakan pada kedua kondisi dan didokumentasikan. Pengukuran latensi dan \textit{throughput} menggunakan trafik sah yang sama dan diizinkan pada kedua kondisi agar pengurangan trafik akibat pemblokiran tidak dianggap sebagai peningkatan kinerja.

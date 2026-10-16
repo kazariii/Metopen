@@ -1,0 +1,46 @@
+1.2 Rumusan Masalah
+
+       Rumusan masalah penelitian ini mencakup dua pertanyaan berikut.
+
+1. Bagaimana tingkat keberhasilan pemblokiran URL phishing dan tingkat kesalah‐
+   an pemblokiran URL sah oleh sistem deteksi berbasis CNN tingkat karakter pada
+   peladen VPN dalam skenario uji yang ditetapkan?
+2. Bagaimana pengaruh integrasi detektor CNN pada peladen VPN terhadap laten‐
+   si, throughput, serta penggunaan CPU dan memori dibandingkan dengan kon‐
+   disi VPN tanpa detektor?
+
+1.3 Tujuan
+
+       Tujuan penelitian disusun sesuai dengan rumusan masalah sebagai berikut.
+
+1. Penelitian ini bertujuan mengukur tingkat keberhasilan pemblokiran URL phi‐
+   shing dan tingkat kesalahan pemblokiran URL sah oleh sistem deteksi berbasis
+   CNN tingkat karakter pada peladen VPN melalui skenario uji yang ditetapkan.
+2. Penelitian ini bertujuan menganalisis pengaruh integrasi detektor CNN terhadap
+   latensi, throughput, serta penggunaan CPU dan memori melalui perbandingan
+   kondisi VPN tanpa dan dengan detektor.
+
+1.4 Manfaat
+
+       Penelitian ini diharapkan memberikan manfaat sebagai berikut.
+
+1. Penelitian ini diharapkan memperkaya kajian keamanan jaringan melalui bukti
+   empiris tentang keberhasilan pemblokiran URL phishing, kesalahan pemblokiran
+   URL sah, serta dampak integrasi CNN terhadap kinerja VPN dan penggunaan
+   sumber daya.
+2. Hasil penelitian diharapkan menyediakan acuan bagi pengembang sistem kea‐
+   manan dan pengelola jaringan untuk menilai penerapan deteksi URL pada pela‐
+   den VPN berdasarkan manfaat perlindungan dan dampaknya terhadap layanan.
+3. Prototipe penelitian diharapkan menyediakan mekanisme pemeriksaan URL se‐
+   belum akses diteruskan bagi pengguna dalam cakupan pengujian sehingga ber‐
+   potensi mengurangi paparan terhadap situs phishing, dengan tetap memperhi‐
+   tungkan kemungkinan kesalahan klasifikasi.
+4. Dokumentasi pengolahan data, pemisahan data uji, rancangan integrasi, dan ha‐
+   sil pengukuran diharapkan menjadi dasar replikasi serta pengembangan metode
+   deteksi dan strategi penerapan pada penelitian selanjutnya.
+
+
+
+
+                                       4
+

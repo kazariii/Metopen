@@ -6,7 +6,8 @@
 \usepackage[
   backend=biber,
   style=ext-authoryear-comp, giveninits, uniquename=init, maxbibnames=999,
-  maxcitenames=2, mincitenames=1,
+  % Panduan FILKOM 3.6.6.3: tiga nama ditulis lengkap; empat atau lebih et al.
+  maxcitenames=3, mincitenames=1,
   urldate=long,
   innamebeforetitle, articlein=false,
 ]{biblatex}
@@ -60,16 +61,21 @@
   phdthesis = {PhD},
   andothers  = {et al\adddot}
 }
-% Indonesian month names for urldate
-\DefineBibliographyExtras{english}{%
-  \protected\def\mkbibmonth#1{\ifcase#1\or
-    Januari\or Februari\or Maret\or April\or Mei\or Juni\or
-    Juli\or Agustus\or September\or Oktober\or November\or Desember\fi}%
-}
+% Tanggal akses dalam urutan hari-bulan-tahun, sesuai contoh panduan.
+\newcommand{\bulanakses}[1]{\ifcase#1\or
+  Januari\or Februari\or Maret\or April\or Mei\or Juni\or
+  Juli\or Agustus\or September\or Oktober\or November\or Desember\fi}
 \AtBeginDocument{%
-  \DeclareFieldFormat{url}{Tersedia pada\addcolon\space\url{#1}}%
-  \DeclareFieldFormat{urldate}{\mkbibbrackets{Diakses\space#1}}%
+  \DeclareFieldFormat{url}{Tersedia di\addcolon\space\textless\url{#1}\textgreater}%
+  \DeclareFieldFormat{urldate}{\mkbibbrackets{Diakses\space
+    \thefield{urlday}\space\bulanakses{\thefield{urlmonth}}\space\thefield{urlyear}}}%
 }
+
+% Panduan FILKOM 3.6.6.3: medium, alamat sumber, dan tanggal akses daring.
+\DeclareFieldFormat[article]{journaltitle}{%
+  \mkbibemph{#1}%
+  \iffieldundef{url}{}{\addspace\mkbibbrackets{online}}}
+\AtEveryBibitem{\iffieldundef{url}{}{\clearfield{doi}}}
 
 % 4.9
 \renewcommand*{\jourvoldelim}{\addcomma\space}

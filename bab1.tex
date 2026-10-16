@@ -1,70 +1,95 @@
+% !TeX root = skripsi.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BAB 1 - PENDAHULUAN
+% Latar belakang dipadatkan; subbab 1.2-1.6 mempertahankan versi sebelumnya.
+% Fokus implementasi: gateway/server VPN, sesuai proposal awal.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \mychapter{1}{BAB 1 PENDAHULUAN}
 
 \section{Latar Belakang}
 
-% Tulis latar belakang penelitian di sini.
-% Contoh sitasi: \parencite{contoh-artikel}
-% Contoh sitasi dalam kalimat: \textcite{contoh-buku}
+Pemanfaatan internet untuk transaksi dan komunikasi meningkatkan kebutuhan perlindungan terhadap \textit{phishing}. Pelaku serangan menggunakan \textit{Uniform Resource Locator} (URL) tiruan untuk mengarahkan pengguna ke situs pencuri informasi \parencite{wei2020}. Temuan \textcite{putra2025} tentang rekayasa sosial dan penyalahgunaan izin aplikasi pada \textit{e-wallet} Android memperlihatkan perlunya pemeriksaan tujuan akses pengguna.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+\textit{Virtual Private Network} (VPN) melindungi komunikasi melalui autentikasi dan enkripsi, tetapi tidak menentukan keamanan URL tujuan \parencite{sharma2020}. Arsitektur VPN dipilih karena penelitian menargetkan perlindungan klien yang menggunakan layanan VPN bersama. Penempatan detektor pada \textit{server} VPN memusatkan inferensi dan pengelolaan model sehingga klien uji menerima kebijakan pemeriksaan yang sama tanpa memasang model pada setiap perangkat. Integrasi ini melengkapi perlindungan jalur komunikasi dengan pemeriksaan tujuan akses sekaligus memungkinkan pengukuran beban detektor pada \textit{server} yang menjalankan VPN. Kajian \textcite{dzaky2025} mendukung penguatan teknologi sebagai bagian dari pencegahan kejahatan siber.
 
+\textit{Convolutional Neural Network} (CNN) tingkat karakter dipilih karena konvolusi dapat mempelajari pola lokal antarkarakter pada URL, termasuk susunan karakter dalam domain dan jalur alamat. Representasi karakter sesuai bagi URL yang dapat mengandung rangkaian simbol tanpa makna kata. Pendekatan \textit{Support Vector Machine} (SVM) dan \textit{Random Forest} berbasis fitur buatan memerlukan perancangan ciri masukan, sedangkan CNN mempelajari fitur dan klasifikasi secara terpadu dari representasi karakter \parencite{aljofey2020}. Kesesuaian tersebut mendasari pemilihan CNN untuk mengurangi ketergantungan pada fitur buatan dan pengambilan konten halaman.
+
+\textcite{wei2020} melaporkan pelatihan CNN yang lebih cepat daripada \textit{Long Short-Term Memory} (LSTM) pada eksperimen dengan data dan perangkat yang sama. \textcite{hussain2023} menunjukkan potensi CNN-Fusion yang ringkas melalui evaluasi kualitas klasifikasi, waktu pelatihan, dan kebutuhan memori. Temuan tersebut mendukung CNN sebagai kandidat yang sesuai bagi layanan deteksi dengan pertimbangan sumber daya. Hasil pelatihan tersebut belum menentukan biaya inferensi pada \textit{server} VPN, sehingga pengukuran kinerja sistem tetap diperlukan.
+
+Penelitian lain mencakup optimasi model \textit{fuzzy} \parencite{nordin2021}, perpaduan CNN dan \textit{Random Forest} \parencite{yang2021}, serta model hibrida dan penggabungan representasi \parencite{shaiba2022,subhashini2024,nanda2024,wangchuk2026}. Keragaman pendekatan ini menunjukkan bahwa pemilihan CNN didasarkan pada kesesuaian masukan dan rancangan sistem; keunggulan atas seluruh alternatif tidak dapat disimpulkan dari hasil pada data serta kondisi pengujian yang berbeda.
+
+\textcite{minhlinh2024} menerapkan deteksi melalui ekstensi peramban dan layanan \textit{server}, sedangkan \textcite{munadi2019} mengevaluasi kinerja jaringan \textit{tunnel broker} OpenVPN. Evaluasi CNN-Fusion, ekstensi peramban, dan OpenVPN tersebut belum memberikan bukti terpadu tentang keberhasilan pemblokiran \textit{phishing}, kesalahan pemblokiran URL sah, dan dampak detektor pada kinerja VPN. Kesenjangan penelitian (\textit{research gap}) ini terletak pada keterbatasan bukti keberhasilan pengendalian akses serta besarnya tambahan pemrosesan ketika detektor berbagi sumber daya dengan VPN.
+
+Penilaian perlindungan juga perlu mempertimbangkan dampaknya terhadap pengguna. Pemblokiran URL sah dapat menghambat layanan, sedangkan kegagalan menghentikan URL \textit{phishing} tetap menyisakan risiko pencurian informasi. Pengukuran hasil pemblokiran dan kinerja VPN diperlukan agar manfaat keamanan dapat dinilai bersama dampaknya terhadap kelancaran akses dan penggunaan sumber daya.
+
+Protokol \textit{Transport Layer Security} (TLS) melindungi isi komunikasi HTTPS sehingga URL lengkap tidak dapat diasumsikan terbaca dari paket jaringan \parencite{rescorla2018}. Klien uji menyerahkan URL kepada detektor melalui koneksi VPN sebelum akses dan menerapkan keputusan untuk mengizinkan atau menghentikan permintaan. Perlindungan terbatas pada klien yang mengikuti mekanisme tersebut. Kajian \textcite{sikder2020} mengenai pembatasan API dan privasi Android mendasari kehati-hatian dalam menggeneralisasi akses data antarplatform.
+
+Penelitian berjudul \enquote{\judulpenelitian} mengusulkan prototipe CNN tingkat karakter sebagai sarana eksperimen. Pengujian mengukur keberhasilan pemblokiran URL \textit{phishing} dan kesalahan pemblokiran URL sah. Perbandingan VPN tanpa dan dengan detektor pada perangkat serta beban yang sama mengukur perubahan latensi, \textit{throughput}, serta penggunaan unit pemroses pusat (CPU) dan memori. Kontribusi yang ditargetkan berupa bukti empiris pengendalian akses dan dampak integrasi terhadap kinerja VPN pada konfigurasi serta skenario uji yang ditetapkan.
+
+\Needspace{13\baselineskip}
 \section{Rumusan Masalah}
 
-% Tulis rumusan masalah di sini.
-
-Berdasarkan latar belakang di atas, rumusan masalah penelitian ini adalah:
-\begin{enumerate}
-  \item Pertanyaan penelitian pertama?
-  \item Pertanyaan penelitian kedua?
+Rumusan masalah penelitian ini mencakup dua pertanyaan berikut.
+\begin{enumerate}[leftmargin=*, itemsep=0.35em]
+  \item Bagaimana tingkat keberhasilan pemblokiran URL \textit{phishing} dan tingkat kesalahan pemblokiran URL sah oleh sistem deteksi berbasis CNN tingkat karakter pada \textit{server} VPN dalam skenario uji yang ditetapkan?
+  \item Bagaimana pengaruh integrasi detektor CNN pada \textit{server} VPN terhadap latensi, \textit{throughput}, serta penggunaan CPU dan memori dibandingkan dengan kondisi VPN tanpa detektor?
 \end{enumerate}
 
-\section{Tujuan Penelitian}
+\Needspace{10\baselineskip}
+\section{Tujuan}
 
-% Tulis tujuan penelitian di sini.
-
-Tujuan dari penelitian ini adalah:
-\begin{enumerate}
-  \item Tujuan pertama.
-  \item Tujuan kedua.
+Tujuan penelitian disusun sesuai dengan rumusan masalah sebagai berikut.
+\begin{enumerate}[leftmargin=*, itemsep=0.35em]
+  \item Penelitian ini bertujuan mengukur tingkat keberhasilan pemblokiran URL \textit{phishing} dan tingkat kesalahan pemblokiran URL sah oleh sistem deteksi berbasis CNN tingkat karakter pada \textit{server} VPN melalui skenario uji yang ditetapkan.
+  \item Penelitian ini bertujuan menganalisis pengaruh integrasi detektor CNN terhadap latensi, \textit{throughput}, serta penggunaan CPU dan memori melalui perbandingan kondisi VPN tanpa dan dengan detektor.
 \end{enumerate}
 
-\section{Manfaat Penelitian}
+\section{Manfaat}
 
-% Tulis manfaat penelitian di sini.
+Penelitian ini diharapkan memberikan manfaat sebagai berikut.
+\begin{enumerate}[leftmargin=*, itemsep=0.35em]
+  \item Penelitian ini diharapkan memperkaya kajian keamanan jaringan melalui bukti empiris tentang keberhasilan pemblokiran URL \textit{phishing}, kesalahan pemblokiran URL sah, serta dampak integrasi CNN terhadap kinerja VPN dan penggunaan sumber daya.
+  \item Hasil penelitian diharapkan menyediakan acuan bagi pengembang sistem keamanan dan pengelola jaringan untuk menilai penerapan deteksi URL pada \textit{server} VPN berdasarkan manfaat perlindungan dan dampaknya terhadap layanan.
+  \item Prototipe penelitian diharapkan menyediakan mekanisme pemeriksaan URL sebelum akses diteruskan bagi pengguna dalam cakupan pengujian sehingga berpotensi mengurangi paparan terhadap situs \textit{phishing}, dengan tetap memperhitungkan kemungkinan kesalahan klasifikasi.
+  \item Dokumentasi pengolahan data, pemisahan data uji, rancangan integrasi, dan hasil pengukuran diharapkan menjadi dasar replikasi serta pengembangan metode deteksi dan strategi penerapan pada penelitian selanjutnya.
+\end{enumerate}
 
 \section{Batasan Masalah}
 
-% Tulis batasan masalah di sini.
+Batasan masalah penelitian ini ditetapkan sebagai berikut.
+\begin{enumerate}[leftmargin=*, itemsep=0.35em]
+  \item Objek klasifikasi adalah teks URL dengan dua kelas, yaitu \textit{phishing} dan sah. Masukan model tidak mencakup isi HTML, tangkapan layar situs, isi pesan, maupun data formulir pengguna. Deteksi jenis ancaman lain berada di luar cakupan penelitian.
+  \item Lingkungan penelitian dibatasi pada prototipe detektor di \textit{server} VPN dan klien uji yang menyerahkan URL sebelum mengakses tujuan. Perlindungan hanya mencakup permintaan yang melalui mekanisme tersebut. Pengembangan VPN lokal pada Android dan perlindungan seluruh trafik aplikasi berada di luar cakupan penelitian.
+  \item URL lengkap diperoleh dari klien uji tanpa inspeksi atau dekripsi TLS. Sistem tidak menganggap domain, alamat IP, atau metadata koneksi sebagai pengganti URL lengkap. Data uji dan catatan pengujian tidak memuat URL yang mengandung kredensial atau informasi pribadi.
+  \item Data bersumber dari himpunan data URL publik, antara lain PhishTank untuk kandidat URL \textit{phishing} dan Common Crawl untuk kandidat URL sah. Label ditelaah sebelum data digunakan; asal sebuah URL dari sumber perayapan tidak otomatis menjamin bahwa URL tersebut sah. URL duplikat dan tidak valid ditangani pada tahap prapemrosesan.
+  \item Data pelatihan, validasi, dan pengujian dipisahkan berdasarkan domain terdaftar untuk mengurangi kebocoran data antarkelompok. Data uji digunakan setelah integrasi model untuk mengevaluasi hasil sistem.
+  \item Pengujian operasional menggunakan model terlatih dengan bobot dan ambang keputusan yang tetap pada seluruh skenario. Ketepatan prediksi model dicatat sebagai informasi pendukung untuk menjelaskan hasil pengendalian akses. Pengujian khusus generalisasi \textit{zero-day}, perubahan distribusi berdasarkan waktu, dan pelatihan ulang berkala berada di luar cakupan penelitian ini.
+  \item URL diproses sebagai teks masukan model tanpa penelusuran seluruh rantai pengalihan. Sampel berbahaya dianalisis sebagai teks atau digunakan dalam lingkungan uji terkendali.
+  \item Evaluasi sistem dibatasi pada keberhasilan pemblokiran URL \textit{phishing}, kesalahan pemblokiran URL sah, latensi, \textit{throughput}, penggunaan CPU, dan penggunaan memori. Perbandingan kinerja menggunakan kondisi VPN tanpa dan dengan detektor pada konfigurasi serta beban yang sama. Hasil penelitian berlaku untuk lingkungan dan skenario pengujian yang didokumentasikan.
+\end{enumerate}
 
 \section{Sistematika Pembahasan}
 
-\noindent
-\textbf{BAB I : PENDAHULUAN}
+Laporan penelitian direncanakan terdiri atas lima bab dengan sistematika berikut.
 
-Bab ini berisi latar belakang, rumusan masalah, tujuan, manfaat,
-batasan masalah, dan sistematika pembahasan.
+\noindent\textbf{BAB 1 PENDAHULUAN}
 
-\noindent
-\textbf{BAB II : LANDASAN TEORI}
+Bab ini menjelaskan latar belakang, penelitian terdahulu, \textit{research gap}, solusi dan kontribusi yang diusulkan, rumusan masalah, tujuan penelitian, manfaat penelitian, batasan masalah, serta sistematika pembahasan.
 
-Bab ini berisi tinjauan pustaka dan landasan teori yang mendukung
-penelitian.
+\noindent\textbf{BAB 2 LANDASAN KEPUSTAKAAN}
 
-\noindent
-\textbf{BAB III : METODOLOGI}
+Bab ini memuat kajian penelitian terkait serta teori tentang \textit{phishing}, struktur URL, CNN tingkat karakter, VPN, keterbatasan visibilitas HTTPS, dan metrik evaluasi klasifikasi serta kinerja jaringan.
 
-Bab ini menjelaskan metodologi yang digunakan dalam penelitian.
+\Needspace{6\baselineskip}
+\noindent\textbf{BAB 3 METODOLOGI PENELITIAN}
 
-\noindent
-\textbf{BAB IV : HASIL DAN PEMBAHASAN}
+Bab ini menguraikan tahapan penelitian, pengumpulan dan pemisahan himpunan data, prapemrosesan URL, perancangan dan pelatihan model, integrasi dengan \textit{server} VPN dan klien uji, serta rancangan eksperimen untuk menjawab rumusan masalah.
 
-Bab ini memaparkan hasil penelitian beserta pembahasannya.
+\noindent\textbf{BAB 4 HASIL DAN PEMBAHASAN}
 
-\noindent
-\textbf{BAB V : KESIMPULAN DAN SARAN}
+Bab ini menyajikan tingkat keberhasilan pemblokiran URL \textit{phishing}, tingkat kesalahan pemblokiran URL sah, serta perbandingan latensi, \textit{throughput}, penggunaan CPU dan memori pada kondisi VPN tanpa dan dengan detektor. Pembahasan menghubungkan hasil pengendalian akses dengan ketepatan prediksi model, penerapan keputusan pada klien uji, dan keterbatasan hasil penelitian.
 
-Bab ini berisi kesimpulan dan saran berdasarkan hasil penelitian.
+\noindent\textbf{BAB 5 PENUTUP}
+
+Bab ini memuat kesimpulan sebagai jawaban atas rumusan masalah dan saran pengembangan berdasarkan hasil serta keterbatasan penelitian. Kesimpulan dan saran disajikan dalam subbab yang terpisah.

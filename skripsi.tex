@@ -8,7 +8,13 @@
 %   3. Tambahkan referensi pada daftar-pustaka.bib
 %   4. Build dengan XeLaTeX (latexmk -xelatex)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% !TeX program = xelatex
 \documentclass{skripsi}
+
+% Mode tugas Metopen: tampilkan BAB 1 dan daftar pustaka.
+% Ubah menjadi \pendahuluansajafalse untuk menyusun skripsi lengkap.
+\newif\ifpendahuluansaja
+\pendahuluansajatrue
 
 % ------------------------------------------------------------
 % Add your own needed package here
@@ -26,8 +32,9 @@
 \usepackage[center,labelfont=bf,font=bf,labelsep=space]{caption}
 \usepackage{subcaption}
 \usepackage{float}
-\usepackage{csquotes}
+\usepackage[autostyle=false,style=english]{csquotes}
 \usepackage{enumitem}
+\usepackage{needspace}
 \usepackage{titlesec}
 
 \titleformat{\paragraph}
@@ -49,6 +56,7 @@
 % -----------------------------------------------------------------
 % Custom source code style
 % -----------------------------------------------------------------
+\ifpendahuluansaja\else
 \usepackage{listings}
 \usepackage[newfloat,chapter]{minted}
 
@@ -105,44 +113,48 @@
 
 \definecolor{codebg}{rgb}{0.95,0.95,0.95}
 \renewcommand\theFancyVerbLine{\footnotesize\arabic{FancyVerbLine}}
+\fi
 
 % -----------------------------------------------------------------
 % Font style
-% Ganti path sesuai lokasi font di komputer Anda
+% Gunakan font yang terpasang di sistem.
 % -----------------------------------------------------------------
 \usepackage{fontspec}
 
-\setmainfont[Path=/Users/GANTI-DENGAN-USERNAME/Library/Fonts/,
-    BoldItalicFont=Calibriz.ttf,
-    BoldFont      =Calibrib.ttf,
-    ItalicFont    =Calibrii.ttf]{Calibri.ttf}
-
-\setmonofont[Path=/System/Library/Fonts/Supplemental/,
-    BoldItalicFont=Courier New Bold Italic.ttf,
-    BoldFont      =Courier New Bold.ttf,
-    ItalicFont    =Courier New Italic.ttf]{Courier New.ttf}
+\setmainfont{Calibri}
+\setmonofont{Courier New}
 
 % -----------------------------------------------------------------
 % Bibliography style
 % -----------------------------------------------------------------
 \input{hangilastyle}
 \addbibresource{daftar-pustaka.bib}
+\urlstyle{same}
+\setlength{\bibitemsep}{0.4\baselineskip}
+\AtBeginBibliography{\interlinepenalty=10000}
 
-\renewcommand*{\finalnamedelim}{%
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
   \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
   \addspace\&\space}
+\DeclareDelimFormat[textcite]{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  \addspace dan\space}
+\DeclareDelimFormat[parencite]{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  \addspace dan\space}
 
 \newcommand{\cmmnt}[1]{\ignorespaces}
 
 % -----------------------------------------------------------------
 % Fill your data here (ISI DATA ANDA DI SINI)
 % -----------------------------------------------------------------
-\titleskripsi{Judul Skripsi Anda Di Sini}
+\newcommand{\judulpenelitian}{Implementasi \textit{Convolutional Neural Network} untuk Deteksi URL \textit{Phishing} pada Arsitektur \textit{Virtual Private Network}}
+\titleskripsi{\judulpenelitian}
 \fullname{Nama Lengkap Anda}
 \idnum{NIM Anda}
 \approvaldate{Tanggal Persetujuan}
 \degree{Sarjana Komputer}
-\yearsubmit{2025}
+\yearsubmit{2026}
 \dept{TEKNIK INFORMATIKA}
 \faculty{FAKULTAS ILMU KOMPUTER}
 \university{universitas brawijaya}
@@ -153,10 +165,18 @@
 \secondsupervisor{Nama Dosen Pembimbing II, S.T., M.T., Ph.D}
 \secondsupervisornip{NIP: XXXXXXXXXXXXXXXX}
 
+\hypersetup{
+  pdftitle={Implementasi Convolutional Neural Network untuk Deteksi URL Phishing pada Arsitektur Virtual Private Network},
+  pdfsubject={Tugas Pendahuluan - Metodologi Penelitian dan Penulisan Ilmiah},
+  hidelinks
+}
+
 % -----------------------------------------------------------------
 % And so it begins
 % -----------------------------------------------------------------
 \begin{document}
+
+\ifpendahuluansaja\else
 
 % -----------------------------------------------------------------
 % Cover
@@ -246,7 +266,7 @@
   \noindent
   Tulis abstrak bahasa Indonesia di sini. Abstrak berisi ringkasan
   singkat dari keseluruhan penelitian, mencakup latar belakang, tujuan,
-  metode, hasil, dan kesimpulan. Panjang abstrak biasanya 150--250 kata.\\
+  metode, hasil, dan kesimpulan. Panjang abstrak umumnya 200--300 kata dengan 5--7 kata kunci sesuai panduan FILKOM.\\
 
   \noindent
   \textbf{Kata Kunci}: \emph{kata kunci pertama},
@@ -263,7 +283,7 @@
   Write your English abstract here. The abstract should contain a brief
   summary of the entire research, including the background, objectives,
   methods, results, and conclusions. Abstract length is typically
-  150--250 words.\\
+  200--300 words with 5--7 keywords, following the FILKOM guide.\\
 
   \noindent
   \textbf{Keywords}: \emph{first keyword},
@@ -281,6 +301,7 @@
 \listoffigures
 \addcontentsline{toc}{chapter}{DAFTAR GAMBAR}
 \addcontentsline{toc}{chapter}{DAFTAR LAMPIRAN}
+\fi
 
 % -----------------------------------------------------------------
 % Chapter
@@ -288,17 +309,19 @@
 \selectlanguage{bahasa}\clearpage\pagenumbering{arabic}\setcounter{page}{1}
 
 \include{bab1}
+\ifpendahuluansaja\else
 \include{bab2}
 \include{bab3}
 % \include{bab4}
 % \include{bab5}
 % \include{bab6}
 % \include{bab7}
+\fi
 
 % -----------------------------------------------------------------
 % Bibliography
 % -----------------------------------------------------------------
-\printbibliography[title={DAFTAR PUSTAKA}]
+\printbibliography[heading=bibintoc,title={DAFTAR REFERENSI}]
 
 \end{document}
 

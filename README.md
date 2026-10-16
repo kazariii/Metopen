@@ -123,10 +123,10 @@ Berikut adalah daftar perbaikan dan penyesuaian yang telah diterapkan pada templ
 
 ### 1. Format Referensi & Sitasi (Harvard Anglia Style)
 - **Bahasa Indonesia pada Sitasi Website (`@online`)**:
-  - Teks URL dan tanggal diakses menggunakan format Bahasa Indonesia: `Tersedia pada: https://... [Diakses 20 Agustus 2026]`.
+  - Teks URL dan tanggal diakses menggunakan format Bahasa Indonesia: `Tersedia di: <https://...> [Diakses 20 Agustus 2026]`.
   - Nama bulan diakses otomatis dikonversi ke Bahasa Indonesia (misal: *Januari, Maret, Agustus*).
 - **Aturan *et al.***:
-  - Dikonfigurasi (`maxcitenames=2, mincitenames=1`) sehingga penelitian dengan **3 penulis atau lebih** otomatis menampilkan *et al.* (misal: *Kumar et al., 2020*), sedangkan 1–2 penulis tetap menampilkan nama lengkap.
+  - Dikonfigurasi (`maxcitenames=3, mincitenames=1`) sesuai Panduan Skripsi FILKOM v3.0 halaman 55–56: sitasi dengan **2–3 penulis** mencantumkan seluruh nama belakang, sedangkan **4 penulis atau lebih** menampilkan penulis pertama diikuti `, et al.`. Daftar referensi tetap mencantumkan semua penulis.
 - **Kata Penghubung Penulis**:
   - Sitasi dalam kalimat (`\textcite`) menggunakan **"dan"** untuk 2 penulis atau antar-kelompok sitasi (misal: *Smith dan Jones (2024)*, *Vargas et al. (2021) dan Ahsan et al. (2024)*).
   - Daftar pustaka menggunakan simbol **"&"**.

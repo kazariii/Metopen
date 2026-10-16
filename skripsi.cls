@@ -67,8 +67,9 @@
     \addcontentsline{toc}{chapter}{#2}
   }
 
-\setcounter{tocdepth}{5}
-\setcounter{secnumdepth}{5}
+% Panduan FILKOM 3.6.1.5: maksimal empat level, termasuk bab.
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
 %% section depth in each chapter
 \renewcommand \thesection {\@arabic\c@chapter.\@arabic\c@section}
 %% subsection in each chapter
@@ -110,8 +111,8 @@
 \renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
   {-3.25ex\@plus -1ex \@minus -.2ex}%
   {1.5ex \@plus .2ex}%
-  % subbab 3 - 14pt per Filkom guidelines
-  {\normalfont\fontsize{14pt}{14pt}\selectfont\bfseries}}
+  % Level 4 (X.X.X.X) - 12pt per Panduan FILKOM 3.6.1.3.
+  {\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries}}
 %% Redefine paragraph (level 4) - 12pt per Filkom guidelines
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}%
   {-3.25ex\@plus -1ex \@minus -.2ex}%
